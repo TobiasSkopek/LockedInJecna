@@ -65,7 +65,7 @@ public class Vypisy
     
     public const string NalezenaObalka = "Na zemi leží bílá obálka, co s ní uděláš?\nVezmu a vyhodím do koše [1]\nOtevřu a přečtu si obsah[2]";
     public const string SpatnyPrikaz = YELLOW + "Zadal jsi špatný příkaz, zkus to znovu\n" + RESET;
-    public const string Dopis1 = "Jednotlivá čísla PINu jsem napsal na barevné papírky a schoval je do kmenových učeben v 1. - 3. patře. \nPIN srovnej podle následujících barev: \n";
+    public const string Dopis1 = "Jednotlivá čísla PINu jsem napsal na barevné papírky a schoval je do kmenových učeben v 1. - 3. patře. \nPIN srovnej podle následujících barev a zadej na odchodovém terminálu: \n";
     public const string Prohrano = RED + "Tímto jsi prohrál a jsi po celý víkend uvězněný ve škole.\nGratuluji!" + RESET;
 
     public const string Vyhrano = GREEN +
