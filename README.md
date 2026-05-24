@@ -3,7 +3,7 @@
 Textová únikovka psaná v jazyce C#. Hráč se ocitá v prázdné budově SPŠE Ječná a jeho úkolem je prohledat všechny učebny školy, najít lístečky s čísly a barvami a sestavit z nich PIN k terminálu, který ho pustí z budovy.
 
 ## Spuštění hry
-* Ideální je spuštění hry v IDE (nejlépe InteliJ Rider)
+* Ideální je spuštění hry v IDE (nejlépe JetBrains Rider)
 
 ## Požadavky
 * **.NET SDK 10.0**
