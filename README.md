@@ -9,4 +9,4 @@ Textová únikovka psaná v jazyce C#. Hráč se ocitá v prázdné budově SPŠ
 * **.NET SDK 10.0**
 * Konzole s podporou ANSI kódů (Terminál ve Windows, MacOS, Linux nebo integrovaný ve vývojovém prostředí)
 
-Odkaz pro stažení .NET SDK 10.0: [Stáhnout .NET 10.0 na Microsoft] https://dotnet.microsoft.com/en-us/download/dotnet/10.0
+Odkaz pro stažení .NET SDK 10.0: https://dotnet.microsoft.com/en-us/download/dotnet/10.0
