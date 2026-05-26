@@ -95,7 +95,7 @@ public class Vypisy
     public const string ZadnyListecek = "Smůla, tady žádný lísteček není. Zkus prohledat jinou učebnu.";
     public const string ZadanoPismeno = YELLOW + "Zadal jsi písmeno místo čísla!" + RESET;
     public const string ZadneUcebny = "Zde se nenachází žádné učebny.";
-    public const string PozadavekNaPin = "Zadejte PIN ve formátu ";
+    public const string PozadavekNaPin = "Zadejte PIN ve formátu:\n";
     public const string OpusteniTerminalu = "Pro odchod od terminálu zadej 9";
     public const string SpravnyPin = BLUE + @"
 ┌───────────────────────────────────────────┐
@@ -136,7 +136,7 @@ public class Vypisy
         foreach (char p in text)
         {
             Console.Write(p);
-            Thread.Sleep(25);
+            Thread.Sleep(15);
         }
     }
 
