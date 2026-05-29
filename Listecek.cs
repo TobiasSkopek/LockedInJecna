@@ -3,7 +3,7 @@ namespace LockedInJecna;
 public class Listecek
 {
     public string Barva { get; set; }
-    private int  _cislo;
+    private int _cislo;
     public Lokace Umisteni { get; set; }
 
     public Listecek(int cislo, string barva, Lokace umisteni)
@@ -22,15 +22,10 @@ public class Listecek
 
         set
         {
-            if (value > 0 && value < 10)
+            if (value >= 0 && value < 10)
             {
                 _cislo = value;
             }
         }
-    }
-
-    public override string ToString()
-    {
-        return Barva + " " + _cislo;
     }
 }
