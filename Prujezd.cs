@@ -7,6 +7,7 @@ public class Prujezd : Lokace
     private int _cisloPozadavku;
     public Prujezd(int patro, string id, string nazev, int cisloPozadavku) : base(patro, id, nazev)
     {
+        _cisloPozadavku = cisloPozadavku;
     }
     
     /// <summary>
