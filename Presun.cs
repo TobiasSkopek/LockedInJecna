@@ -2,19 +2,15 @@ namespace LockedInJecna;
 
 public class Presun
 {
-   private bool _vUcebne = false;
+   private bool _vUcebne;
    private Vypisy _vypisy = new Vypisy();
    public bool VUcebne 
    { 
        get { return _vUcebne; }
        set { _vUcebne = value; }
    }
-    
-    public Presun()
-    {
-    }
 
-    /// <summary>
+   /// <summary>
     /// Premisti hrace na jinou lokaci, smaze obsah konzole a vypise aktualni lokaci a nalezene listecky.
     /// </summary>
     /// <param name="kam">Cilova lokace</param>
@@ -33,7 +29,8 @@ public class Presun
     /// <param name="start">Instance tridy Start</param>
     /// <param name="vypisy">Instance tridy Vypisy</param>
     public void NabidkaPresunu(Start start, Vypisy vypisy)
-    {
+    { 
+        
         bool spatnaVolba = false;
         
             do
@@ -41,7 +38,7 @@ public class Presun
                 vypisy.VypisDoKonzole(Environment.NewLine + Vypisy.NabidkaChodeb);
                 vypisy.VypisDoKonzole(start.AktualniLokace.VypisSousedniLokace());
                 
-                string vstup = null;
+                string? vstup = null;
 
                 if (start.AktualniLokace is Chodba ch && ch.Patro != 0)
                 {
@@ -53,12 +50,12 @@ public class Presun
                     vstup = vypisy.ZiskejVstup(Vypisy.RozcestnikPodlazi);
                 }
                 
-                if (vstup.ToLower() == "p" && start.AktualniLokace is Prujezd)
+                if (vstup?.ToLower() == "p" && start.AktualniLokace is Prujezd)
                 {
                     ZmenaLokace(start.T1, start);
                 }
                 
-                else if (vstup.ToLower() == "u" && start.AktualniLokace is Chodba chodba && chodba.Patro != 0)
+                else if (vstup?.ToLower() == "u" && start.AktualniLokace is Chodba chodba && chodba.Patro != 0)
                 {
                     bool spatnaVolbaU = false;
                         
@@ -71,34 +68,39 @@ public class Presun
                             vypisy.VypisDoKonzole(l.Nazev);
                         }
 
-                        int vstupU = 0;
+                        int vstupU;
 
                         try
                         {
                             vstupU = Convert.ToInt32(vypisy.ZiskejVstup(Vypisy.RozcestnikUceben));
                         }
-                        catch (FormatException e)
+                        catch (FormatException)
                         {
                             vypisy.VypisDoKonzole(Vypisy.ZadanoPismeno);
                             spatnaVolbaU = true;
+                            continue;
+                        }
+                        catch (OverflowException)
+                        {
+                            vypisy.VypisDoKonzole(Vypisy.UcebnaNeexistuje);
+                            spatnaVolbaU = true;
+                            continue;
                         }
                             
                         bool nalezena = false;
-                        bool uzamcenaUcebna = false;
-                            
+
                         foreach (Ucebna u in chodba.Ucebny)
                         {
-                            if (u.Cislo == vstupU && u.Odemceno == true) 
+                            if (u.Cislo == vstupU && u.Odemceno) 
                             {
                                 ZmenaLokace(u, start);
                                 spatnaVolbaU = false;
-                                nalezena = true; 
+                                nalezena = true;
                                 _vUcebne = true;
                             }
 
                             if (u.Cislo == vstupU && u.Odemceno == false)
                             {
-                                //spatnaVolbaU = true;
                                 vypisy.SmazObsahKonzole();
                                 vypisy.VypisDoKonzole(Vypisy.UzamcenaUcebna);
                                 nalezena = true; 
@@ -111,21 +113,28 @@ public class Presun
                             vypisy.VypisDoKonzole(Vypisy.UcebnaNeexistuje);
                         }
 
-                    } while (spatnaVolbaU == true);
+                    } while (spatnaVolbaU);
                 }
                 
                 else
                 {
-                    int? vstupP = null;
-                    
+                    int? vstupP;
+
                     try
                     {
                         vstupP = Convert.ToInt32(vstup);
                     }
-                    catch (FormatException e)
+                    catch (FormatException)
                     {
                         vypisy.SmazObsahKonzole();
                         vypisy.VypisDoKonzole(Vypisy.SpatnyPrikaz);
+                        continue;
+                    }
+                    catch (OverflowException)
+                    {
+                        vypisy.SmazObsahKonzole();
+                        vypisy.VypisDoKonzole(Vypisy.SpatnyPrikaz);
+                        continue;
                     }
                     
                     foreach (Lokace l in start.Lokace)
@@ -149,13 +158,13 @@ public class Presun
                         spatnaVolba = true;
                     }
 
-                    if (vstupP > 4 && vstupP != 9 && vstupP != 100)
+                    if (vstupP > 4 && vstupP != 9)
                     {
                         vypisy.VypisDoKonzole(Vypisy.PatroNeexistuje);
                         spatnaVolba = true;
                     }
                 }
 
-            } while (spatnaVolba == true && _vUcebne == false);
+            } while (spatnaVolba && _vUcebne == false);
     }
 }
