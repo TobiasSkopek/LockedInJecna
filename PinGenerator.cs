@@ -5,15 +5,10 @@ public class PinGenerator
     private Random _rnd = new Random();
     private List<Listecek> _vygenerovane = new List<Listecek>(6);
 
-    public PinGenerator()
-    {
-        
-    }
-
     /// <summary>
-    /// Vygeneruje nahodny PIN a umisti ho do nahodne ucebny. 
+    /// Z listu vybere pouze ucebny. V cyklu vygeneruje kazdemu listecku barvu, cislo a nahodne ho umisti do ucebny, ktera je odemcena. 
     /// </summary>
-    /// <param name="umisteni"></param>
+    /// <param name="umisteni">List lokaci, ze kterych se vybira umisteni listecku.</param>
     public void VygenerujPin(List<Lokace> umisteni)
     {
         List<string> barvy = new List<string>();
@@ -21,9 +16,8 @@ public class PinGenerator
 
         foreach (Lokace l in umisteni)
         {
-            if (l is Ucebna)
+            if (l is Ucebna u)
             {
-                Ucebna u = l as Ucebna;
                 ucebny.Add(u);
             }
         }
@@ -49,7 +43,7 @@ public class PinGenerator
                 
             } while (ucebny[nahodneUmisteni].Odemceno == false);
             
-            Ucebna umisteniListecku = ucebny[nahodneUmisteni]; // Vyřešit pokud učebna je zamčená
+            Ucebna umisteniListecku = ucebny[nahodneUmisteni];
             ucebny.RemoveAt(nahodneUmisteni);
             
             Listecek novy = new Listecek(cisloNaListecku, vyslednaBarva, umisteniListecku);
@@ -65,8 +59,7 @@ public class PinGenerator
     const string MAGENTA = "\u001B[35m";
     const string YELLOW = "\u001B[33m";
     const string CYAN = "\u001B[36m";
-    const string JECNA_BLUE = "\u001B[38;2;155;191;234m";
-    
+
     /// <summary>
     /// Projde vsechny vygenerovane listecky a vrati napovedu PINu pomoci barev.
     /// </summary>
@@ -102,13 +95,10 @@ public class PinGenerator
     /// Projde vygenerovane listecky a pokud se nachazi v pozadovane ucebne, vrati hlasku o nalezenem/nenalezenem listecku popr. vypise jeho cislo a barvu.
     /// </summary>
     /// <param name="ktera">Pozadavana ucebna, kterou chceme prohledat</param>
-    /// <param name="inventar"></param>
-    /// <returns>Cislo na listecku a jeho barva popr. ze se v ucebne zadny listecek nenachazi</returns>
-    public string ProhledatUcebnu(Ucebna ktera, Inventar inventar)
+    /// <param name="inventar">Instance třídy Inventar</param>
+    /// <returns>Cislo na listecku a jeho barva popr. hlaska, ze se v ucebne zadny listecek nenachazi</returns>
+    public string ProhledatUcebnu(Ucebna? ktera, Inventar inventar)
     {
-        bool jeTam = false;
-        string vystup = "";
-        
         foreach (Listecek l in _vygenerovane)
         {
             if (l.Umisteni == ktera)
@@ -120,23 +110,15 @@ public class PinGenerator
                 
                 switch (l.Barva)
                 {
-                    case "zelená":
-                        return Vypisy.NalezenyListecek + l.Cislo + " " + GREEN + l.Barva + RESET + " " + Environment.NewLine;
-                        break;
-                    case "modrá": return Vypisy.NalezenyListecek + l.Cislo +  " " + BLUE + l.Barva + RESET + " " + Environment.NewLine;
-                        break;
-                    case "červená": return Vypisy.NalezenyListecek + l.Cislo +  " " + RED + l.Barva + RESET + " " + Environment.NewLine;
-                        break;
+                    case "zelená": return Vypisy.NalezenyListecek + GREEN + l.Cislo + " " + l.Barva + RESET + " " + Environment.NewLine;
+                    case "modrá": return Vypisy.NalezenyListecek + BLUE + l.Cislo +  " " + l.Barva + RESET + " " + Environment.NewLine;
+                    case "červená": return Vypisy.NalezenyListecek + RED + l.Cislo +  " " + l.Barva + RESET + " " + Environment.NewLine;
                     case "bílá": return Vypisy.NalezenyListecek + l.Cislo + " " + l.Barva + " " + Environment.NewLine;
-                        break;
-                    case "tyrkysová": return Vypisy.NalezenyListecek + l.Cislo + " " + CYAN + l.Barva + RESET + " " + Environment.NewLine;
-                        break;
-                    case "fialová": return Vypisy.NalezenyListecek + l.Cislo + " " + MAGENTA + l.Barva + RESET + " " + Environment.NewLine;
-                        break;
+                    case "tyrkysová": return Vypisy.NalezenyListecek + CYAN + l.Cislo + " " + l.Barva + RESET + " " + Environment.NewLine;
+                    case "fialová": return Vypisy.NalezenyListecek + MAGENTA + l.Cislo + " " + l.Barva + RESET + " " + Environment.NewLine;
                 }
             }
         }
-        
         return Vypisy.ZadnyListecek;
     }
 
@@ -145,11 +127,11 @@ public class PinGenerator
     /// Porovna zadany PIN od uzivatele s PINem sestavenym z listecku.
     /// </summary>
     /// <param name="zadanyPin">PIN zadany od uzivatele</param>
-    /// <returns>V pripade shody se zadanym PINem od uzivatele vrati true.
-    /// V pripade neshody se zadanym PINem od uzivatele vrati false.</returns>
+    /// <returns>V pripade shody se zadanym PINem od uzivatele vrati hodnotu true.
+    /// V pripade neshody se zadanym PINem od uzivatele vrati hodnotu false.</returns>
     public bool OvereniPinu(int zadanyPin)
     {
-        string pin = null;
+        string? pin = null;
         bool vystup = false;
         
         foreach (Listecek l in _vygenerovane)
