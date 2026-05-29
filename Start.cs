@@ -4,7 +4,7 @@ public class Start
 {
 
     public List<Lokace> Lokace = new List<Lokace>();
-    private Lokace _aktualniLokace = null;
+    private Lokace _aktualniLokace;
     public PinGenerator P1;
     public Prujezd Pr1;
     public Inventar Inv1;
@@ -41,12 +41,10 @@ public class Start
        {
            int nahodneC = _rnd.Next(0, 10);
            
-           if (nahodneC % 2 != 0 && (pocetLichych < pocetUceben - 6) && l is Ucebna)
+           if (nahodneC % 2 != 0 && (pocetLichych < pocetUceben - 6) && l is Ucebna u)
            {
                pocetLichych++;
-               Ucebna? u = l as Ucebna;
-
-               u?.Odemceno = false;
+               u.Odemceno = false;
            }
        }
     }
