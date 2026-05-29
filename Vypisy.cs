@@ -17,10 +17,10 @@ public class Vypisy
     /// </summary>
     /// <param name="prikaz">Prikaz, ktery uzivateli rika, co ma zadat.</param>
     /// <returns>Zadany prikaz</returns>
-    public string ZiskejVstup(string prikaz)
+    public string? ZiskejVstup(string prikaz)
     {
         Console.Write(prikaz + RED + Environment.NewLine + "-> ");
-        string vstup = Console.ReadLine();
+        string? vstup = Console.ReadLine();
         Console.Write(RESET);
         return vstup;
     }
@@ -76,7 +76,7 @@ public class Vypisy
     public const string PresunDo4Np =
         YELLOW + "\nTy chceš cupitat ještě těch dalších 34 schodů? Tam se dneska ale nedostaneš! \nZkus zadat nějaké z pater na seznamu." + RESET;
 
-    public const string UzamcenaUcebna = YELLOW + "Tato učebna je uzamčena. Vyber si jinou ze seznamu." + RESET;
+    public const string UzamcenaUcebna = YELLOW + "TATO UČEBNA JE UZAMČENA.\nVyber si jinou ze seznamu." + RESET;
     public const string UcebnaNeexistuje = YELLOW + "Tato učebna neexistuje nebo není na tomto patře. Vyber si jinou ze seznamu." + RESET;
 
     public const string PatroNeexistuje =
@@ -136,7 +136,7 @@ public class Vypisy
         foreach (char p in text)
         {
             Console.Write(p);
-            Thread.Sleep(15);
+            Thread.Sleep(7);
         }
     }
 
