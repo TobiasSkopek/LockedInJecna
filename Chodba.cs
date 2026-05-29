@@ -11,7 +11,7 @@ public class Chodba : Lokace
     }
     
     /// <summary>
-    /// Vypisuje sousedni lokace dane lokace, do kterych se lze premistit.
+    /// Vypise sousedni lokace dane lokace, do kterych se lze premistit.
     /// </summary>
     /// <returns>Nazvy sousednich lokaci, do kterych je mozny presun</returns>
     public override string VypisSousedniLokace()
@@ -25,9 +25,9 @@ public class Chodba : Lokace
                 nazvy += l.Nazev + "[" + l.Patro + "]" + Environment.NewLine;
             }
 
-            if (l is Prujezd)
+            if (l is Prujezd p)
             {
-                nazvy += l.Nazev + "[9]" + Environment.NewLine;
+                nazvy += p.Nazev + "[" + p.CisloPozadavku + "]" + Environment.NewLine;
             }
         }
 
