@@ -18,43 +18,51 @@ public class Terminal : Lokace
     /// <param name="vypisy">Instance tridy Vypisy</param>
     /// <param name="presun">Instance tridy Presun</param>
     public void Autentizace(Start start, Vypisy vypisy, Presun presun)
-    {
+    { 
         bool spatnyPrikaz = true;
         
         while (start.AktualniLokace is Terminal && spatnyPrikaz && SpravnyPin == false)
         {
             try
-            { 
-                int pinUzivatele = Convert.ToInt32(vypisy.ZiskejVstup("("+ Vypisy.OpusteniTerminalu + ")" + Environment.NewLine + Vypisy.PozadavekNaPin + start.P1.BarevnaNapoveda()));
+            {
+                int pinUzivatele = Convert.ToInt32(vypisy.ZiskejVstup("(" + Vypisy.OpusteniTerminalu + ")" +
+                                                                      Environment.NewLine + Vypisy.PozadavekNaPin +
+                                                                      start.P1.BarevnaNapoveda()));
 
+                bool vysledekOvereni = start.P1.OvereniPinu(pinUzivatele);
+                
                 if (pinUzivatele == 9)
                 {
                     presun.ZmenaLokace(start.Pr1, start);
                 }
-
+                
                 else
                 {
-                    if (start.P1.OvereniPinu(pinUzivatele))
+                    if (vysledekOvereni)
                     {
                         vypisy.SmazObsahKonzole();
                         vypisy.VypisDoKonzole(Vypisy.SpravnyPin);
                         SpravnyPin = true;
                     }
-                    
-                    if ((start.P1.OvereniPinu(pinUzivatele)) == false)
+
+                    if (vysledekOvereni == false)
                     {
                         vypisy.VypisDoKonzole(Vypisy.NespravnyPin);
                         SpravnyPin = false;
                     }
                 }
-                
             }
-            
-            catch (FormatException e)
+            catch (FormatException)
             {
                 vypisy.VypisDoKonzole(Vypisy.ZadanoPismeno);
                 vypisy.VypisDoKonzole("");
                 spatnyPrikaz = true;
+            }
+            catch (OverflowException)
+            {
+                vypisy.VypisDoKonzole(Vypisy.ZadanoPismeno);
+                vypisy.VypisDoKonzole("");
+                spatnyPrikaz = true; 
             }
         }
     }
@@ -62,7 +70,7 @@ public class Terminal : Lokace
     /// <summary>
     /// Vypisuje sousední lokace terminalu.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Nazvy sousednich lokaci, do kterych je mozny presun</returns>
     public override string VypisSousedniLokace()
     {
         string nazvy = "";
