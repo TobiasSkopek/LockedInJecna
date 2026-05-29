@@ -1,12 +1,8 @@
-﻿namespace LockedInJecna;
+namespace LockedInJecna;
 
 public class Inventar
 {
     public List<Listecek> Posbirane = new List<Listecek>();
-
-    public Inventar()
-    {
-    }
 
     /// <summary>
     /// Projde list posbiranych listecku a vypise cislo a barvu.
