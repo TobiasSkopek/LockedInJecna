@@ -19,9 +19,7 @@ public class Terminal : Lokace
     /// <param name="presun">Instance tridy Presun</param>
     public void Autentizace(Start start, Vypisy vypisy, Presun presun)
     { 
-        bool spatnyPrikaz = true;
-        
-        while (start.AktualniLokace is Terminal && spatnyPrikaz && SpravnyPin == false)
+        while (start.AktualniLokace is Terminal && SpravnyPin == false)
         {
             try
             {
@@ -56,13 +54,11 @@ public class Terminal : Lokace
             {
                 vypisy.VypisDoKonzole(Vypisy.ZadanoPismeno);
                 vypisy.VypisDoKonzole("");
-                spatnyPrikaz = true;
             }
             catch (OverflowException)
             {
-                vypisy.VypisDoKonzole(Vypisy.ZadanoPismeno);
+                vypisy.VypisDoKonzole(Vypisy.NespravnyPin);
                 vypisy.VypisDoKonzole("");
-                spatnyPrikaz = true; 
             }
         }
     }
