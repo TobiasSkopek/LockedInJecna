@@ -12,13 +12,13 @@ public class PinGenerator
     public void VygenerujPin(List<Lokace> umisteni)
     {
         List<string> barvy = new List<string>();
-        List<Ucebna> ucebny = new List<Ucebna>();
+        List<Ucebna> ucebnyO = new List<Ucebna>();
 
         foreach (Lokace l in umisteni)
         {
-            if (l is Ucebna u)
+            if (l is Ucebna u && u.Odemceno)
             {
-                ucebny.Add(u);
+                ucebnyO.Add(u);
             }
         }
             
@@ -37,14 +37,10 @@ public class PinGenerator
             barvy.RemoveAt(indexBarvy);
             int nahodneUmisteni;
             
-            do
-            {
-                nahodneUmisteni = _rnd.Next(0, ucebny.Count);
-                
-            } while (ucebny[nahodneUmisteni].Odemceno == false);
+            nahodneUmisteni = _rnd.Next(0, ucebnyO.Count);
             
-            Ucebna umisteniListecku = ucebny[nahodneUmisteni];
-            ucebny.RemoveAt(nahodneUmisteni);
+            Ucebna umisteniListecku = ucebnyO[nahodneUmisteni];
+            ucebnyO.RemoveAt(nahodneUmisteni);
             
             Listecek novy = new Listecek(cisloNaListecku, vyslednaBarva, umisteniListecku);
             _vygenerovane.Add(novy);
